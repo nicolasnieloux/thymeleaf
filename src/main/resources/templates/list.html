@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>List</title>
 </head>
 <body>
-$END$
+<table>
+    <h1>Welcome</h1>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Point de vie</th>
+    </tr>
+    <tr th:each="perso : ${persons}">
+        <td th:utext="${perso.id}"></td>
+        <td th:utext="${perso.name}"></td>
+        <td th:utext="${perso.type}"></td>
+        <td th:utext="${perso.lifePoint}"></td>
+    </tr>
+</table>
 </body>
 </html>
