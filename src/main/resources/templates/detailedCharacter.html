@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+  <h1>Welcome</h1>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Point de vie</th>
+  </tr>
+  <tr>
+    <td th:utext="${characterDetailed.id}"></td>
+    <td th:utext="${characterDetailed.name}"></td>
+    <td th:utext="${characterDetailed.type}"></td>
+    <td th:utext="${characterDetailed.lifePoint}"></td>
+  </tr>
+</table>
+</body>
+</html>
