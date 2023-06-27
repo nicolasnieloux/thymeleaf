@@ -62,16 +62,16 @@ public class ThymeleafApplicationController {
             return "redirect:/list";
         }
 
-        CharacterForm characterForm = new CharacterForm();
+    //    CharacterForm characterForm = new CharacterForm();
         Type[] type = new Type[]{Type.Guerrier, Type.Magicien};
 
-        characterForm.setId(characterToUpdate.getId());
-        characterForm.setName(characterToUpdate.getName());
-        characterForm.setType(characterToUpdate.getType());
-        characterForm.setLifePoint(characterToUpdate.getLifePoint());
+//        characterForm.setId(characterToUpdate.getId());
+//        characterForm.setName(characterToUpdate.getName());
+//        characterForm.setType(characterToUpdate.getType());
+//        characterForm.setLifePoint(characterToUpdate.getLifePoint());
 
 
-        model.addAttribute("characterForm", characterForm);
+        model.addAttribute("characterForm", characterToUpdate);
         model.addAttribute("type", type);
 
         return "updateCharacter";

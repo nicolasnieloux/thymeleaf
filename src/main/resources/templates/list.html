@@ -12,12 +12,16 @@
         <th>Name</th>
         <th>Type</th>
         <th>Point de vie</th>
+        <th>Détail</th>
+        <th>Edit</th>
     </tr>
     <tr th:each="perso : ${persons}">
         <td th:utext="${perso.id}"></td>
         <td th:utext="${perso.name}"></td>
         <td th:utext="${perso.type}"></td>
         <td th:utext="${perso.lifePoint}"></td>
+        <td> <a th:href="@{/detailedCharacter/{car} (car=${perso.id})}">Details</a></td>
+        <td> <a th:href="@{/updateCharacter/{car} (car=${perso.id})}">Edit</a></td>
     </tr>
 </table>
 </body>

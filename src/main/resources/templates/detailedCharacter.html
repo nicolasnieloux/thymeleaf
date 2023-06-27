@@ -20,5 +20,7 @@
     <td th:utext="${characterDetailed.lifePoint}"></td>
   </tr>
 </table>
+<a th:href="@{/list}">Retour à la liste</a>
+<a th:href="@{/updateCharacter/{car} (car=${characterDetailed.id})}">Update</a>
 </body>
 </html>
