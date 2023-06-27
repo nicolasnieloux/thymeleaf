@@ -14,6 +14,7 @@
         <th>Point de vie</th>
         <th>Détail</th>
         <th>Edit</th>
+        <th>Supp</th>
     </tr>
     <tr th:each="perso : ${persons}">
         <td th:utext="${perso.id}"></td>
@@ -22,6 +23,7 @@
         <td th:utext="${perso.lifePoint}"></td>
         <td> <a th:href="@{/detailedCharacter/{car} (car=${perso.id})}">Details</a></td>
         <td> <a th:href="@{/updateCharacter/{car} (car=${perso.id})}">Edit</a></td>
+        <td><a th:href="@{/removeCharacter/{car} (car=${perso.id})}">Supprimer</a></td>
     </tr>
 </table>
 </body>

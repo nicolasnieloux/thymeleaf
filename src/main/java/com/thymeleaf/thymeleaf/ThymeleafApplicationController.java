@@ -12,11 +12,12 @@ import java.util.Optional;
 public class ThymeleafApplicationController {
     private final List<Character> persons = new ArrayList<>();
 
-    private ThymeleafApplicationController(){
+    private ThymeleafApplicationController() {
         persons.add(new Character(1, "Charly", Type.Magicien, 10));
         persons.add(new Character(2, "Cedric", Type.Guerrier, 25));
         persons.add(new Character(3, "Jerome", Type.Guerrier, 1));
     }
+
     @GetMapping(path = ("/list"))
     public String getCharacter(Model model) {
         model.addAttribute("persons", persons);
@@ -62,14 +63,7 @@ public class ThymeleafApplicationController {
             return "redirect:/list";
         }
 
-    //    CharacterForm characterForm = new CharacterForm();
         Type[] type = new Type[]{Type.Guerrier, Type.Magicien};
-
-//        characterForm.setId(characterToUpdate.getId());
-//        characterForm.setName(characterToUpdate.getName());
-//        characterForm.setType(characterToUpdate.getType());
-//        characterForm.setLifePoint(characterToUpdate.getLifePoint());
-
 
         model.addAttribute("characterForm", characterToUpdate);
         model.addAttribute("type", type);
@@ -88,14 +82,12 @@ public class ThymeleafApplicationController {
                 .filter(character -> character.getId() == id)
                 .findFirst();
 
-        if (characterToUpdate.isPresent()){
+        if (characterToUpdate.isPresent()) {
             Character character = characterToUpdate.get();
             character.setName(name);
             character.setLifePoint(lifePoint);
             character.setType(type);
         }
-
-
 
         return "redirect:/list";
     }
@@ -106,7 +98,7 @@ public class ThymeleafApplicationController {
                 .filter(character -> character.getId() == id)
                 .findFirst()
                 .orElse(null);
-        model.addAttribute("characterDetailed" , characterDetailed);
+        model.addAttribute("characterDetailed", characterDetailed);
 
         if (characterDetailed == null) {
             return "redirect:/list";
@@ -114,5 +106,14 @@ public class ThymeleafApplicationController {
         return "detailedCharacter";
     }
 
+    @RequestMapping(value = "/removeCharacter/{id}", method = RequestMethod.GET)
+    public String deletePersonPage(@PathVariable("id") int id) {
+
+        Character characterToRemove = persons.stream()
+                .filter(character -> character.getId() == id)
+                .findFirst().get();
+        persons.remove(characterToRemove);
+        return "redirect:/list";
+    }
 
 }
