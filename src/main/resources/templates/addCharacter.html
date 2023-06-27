@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+
+</head>
+<body>
+<h1>Ajout d'un personnage</h1>
+<a th:href="@{/list}">Retour à la liste</a>
+
+<form th:action="@{/addCharacter}"
+      th:object="${characterForm}" method="POST">
+    ID
+    <input type="number" th:field="*{id}"/>
+    <br/>
+    Name:
+    <input type="text" th:field="*{name}"/>
+    <br/>
+    Type
+    <select th:field="*{type}">
+        <option th:each="typ : ${type}" th:value="${typ}" th:text="${typ}">
+        </option>
+    </select>
+    <br/>
+    Point de vie
+    <input type="number" th:field="*{lifePoint}" />
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+
+<br/>
+
+</body>
+</html>

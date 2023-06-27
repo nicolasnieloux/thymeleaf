@@ -15,6 +15,15 @@ public class Character {
         this.lifePoint = lifePoint;
     }
 
+    public Character(String name, Type type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    public Character(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
