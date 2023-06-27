@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Mise à jour d'un personnage</h1>
-<a th:href="@{/list}">Retour à la liste</a>
+<a th:href="@{/}">Retour à la liste</a>
 
 <form th:action="@{/updateCharacter}" th:object="${characterForm}" method="POST">
     ID: <span th:text="*{id}"></span>

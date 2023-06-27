@@ -18,7 +18,7 @@ public class ThymeleafApplicationController {
         persons.add(new Character(3, "Jerome", Type.Guerrier, 1));
     }
 
-    @GetMapping(path = ("/list"))
+    @GetMapping(path = ("/"))
     public String getCharacter(Model model) {
         model.addAttribute("persons", persons);
         return "list";
@@ -49,7 +49,7 @@ public class ThymeleafApplicationController {
         Character newCharacter = new Character(id, name, type, lifePoint);
         persons.add(newCharacter);
 
-        return "redirect:/list";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/updateCharacter/{id}", method = RequestMethod.GET)
@@ -60,7 +60,7 @@ public class ThymeleafApplicationController {
                 .orElse(null);
 
         if (characterToUpdate == null) {
-            return "redirect:/list";
+            return "redirect:/";
         }
 
         Type[] type = new Type[]{Type.Guerrier, Type.Magicien};
@@ -89,7 +89,7 @@ public class ThymeleafApplicationController {
             character.setType(type);
         }
 
-        return "redirect:/list";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/detailedCharacter/{id}", method = RequestMethod.GET)
@@ -101,7 +101,7 @@ public class ThymeleafApplicationController {
         model.addAttribute("characterDetailed", characterDetailed);
 
         if (characterDetailed == null) {
-            return "redirect:/list";
+            return "redirect:/";
         }
         return "detailedCharacter";
     }
@@ -113,7 +113,7 @@ public class ThymeleafApplicationController {
                 .filter(character -> character.getId() == id)
                 .findFirst().get();
         persons.remove(characterToRemove);
-        return "redirect:/list";
+        return "redirect:/";
     }
 
 }
