@@ -9,8 +9,7 @@
 <a th:href="@{/list}">Retour à la liste</a>
 
 <form th:action="@{/updateCharacter}" th:object="${characterForm}" method="POST">
-    ID: <span th:text="*{id}"></span>
-    <br/>
+
     Name: <input type="text" th:field="*{name}"/>
     <br/>
     Type:

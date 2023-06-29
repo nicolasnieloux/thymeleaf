@@ -20,6 +20,12 @@ public class Character {
         this.type = type;
     }
 
+    public Character(String name, Type type, int lifePoint) {
+        this.name = name;
+        this.type = type;
+        this.lifePoint = lifePoint;
+    }
+
     public Character(String name) {
         this.name = name;
     }

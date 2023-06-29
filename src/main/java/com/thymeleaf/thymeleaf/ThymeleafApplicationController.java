@@ -1,7 +1,6 @@
 package com.thymeleaf.thymeleaf;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,33 +24,38 @@ public class ThymeleafApplicationController {
         return "list";
     }
 
-//    @RequestMapping(value = {"/addCharacter"}, method = RequestMethod.GET)
-//    public String showAddPersonPage(Model model) {
-//
-//        CharacterForm characterForm = new CharacterForm();
-//        Type[] type = new Type[]{Type.Guerrier, Type.Magicien};
-//
-//        model.addAttribute("characterForm", characterForm);
-//        model.addAttribute("type", type);
-//
-//        return "addCharacter";
-//    }
-//
-//    @RequestMapping(value = {"/addCharacter"}, method = RequestMethod.POST)
-//    public String savePerson(Model model, //
-//                             @ModelAttribute("characterForm") CharacterForm characterForm) {
-//
-//        int id = characterForm.getId();
-//        String name = characterForm.getName();
-//        Type type = characterForm.getType();
-//        int lifePoint = characterForm.getLifePoint();
-//
-//
-//        Character newCharacter = new Character(id, name, type, lifePoint);
-//        persons.add(newCharacter);
-//
-//        return "redirect:/";
-//    }
+    @RequestMapping(value = {"/addCharacter"}, method = RequestMethod.GET)
+    public String showAddPersonPage(Model model) {
+
+        CharacterForm characterForm = new CharacterForm();
+        Type[] type = new Type[]{Type.Guerrier, Type.Magicien};
+
+        model.addAttribute("characterForm", characterForm);
+        model.addAttribute("type", type);
+
+        return "addCharacter";
+    }
+
+    @RequestMapping(value = {"/addCharacter"}, method = RequestMethod.POST)
+    public String savePerson(
+                             @ModelAttribute("characterForm") CharacterForm characterForm) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String name = characterForm.getName();
+        Type type = characterForm.getType();
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        String urlList = "http://localhost:8081/personnage";
+
+        Character characterNew = new Character(name,type);
+        HttpEntity<Character> request = new HttpEntity<>(characterNew,headers);
+
+        restTemplate.postForEntity(urlList, request, Character.class);
+
+        return "redirect:/";
+    }
 
 //    @RequestMapping(value = "/updateCharacter/{id}", method = RequestMethod.GET)
 //    public String showUpdatePersonPage(@PathVariable("id") int id, Model model) {
@@ -71,28 +75,59 @@ public class ThymeleafApplicationController {
 //
 //        return "updateCharacter";
 //    }
-
+//
 //    @RequestMapping(value = "/updateCharacter", method = RequestMethod.POST)
 //    public String updatePerson(Model model, @ModelAttribute("characterForm") CharacterForm characterForm) {
-//        int id = characterForm.getId();
+//
 //        String name = characterForm.getName();
 //        Type type = characterForm.getType();
 //        int lifePoint = characterForm.getLifePoint();
 //
-//        Optional<Character> characterToUpdate = persons.stream()
-//                .filter(character -> character.getId() == id)
-//                .findFirst();
 //
-//        if (characterToUpdate.isPresent()) {
-//            Character character = characterToUpdate.get();
-//            character.setName(name);
-//            character.setLifePoint(lifePoint);
-//            character.setType(type);
-//        }
 //
 //        return "redirect:/list";
 //    }
-//
+@GetMapping("/updateCharacter/{id}")
+public String showUpdateCharacterPage(@PathVariable("id") Long id, Model model) {
+    RestTemplate restTemplate = new RestTemplate();
+    String url = "http://localhost:8081/personnage/{id}";
+
+    Character character = restTemplate.getForObject(url, Character.class, id);
+
+    if (character != null) {
+        CharacterForm characterForm = new CharacterForm();
+        Type[] type = new Type[]{Type.Guerrier, Type.Magicien};
+
+        characterForm.setName(character.getName());
+        characterForm.setType(character.getType());
+        characterForm.setLifePoint(character.getLifePoint());
+
+        model.addAttribute("characterForm", characterForm);
+        model.addAttribute("type", type);
+
+        return "updateCharacter";
+    } else {
+        // Gérer le cas où le personnage n'est pas trouvé
+        return "redirect:/";
+    }
+}
+
+    @PostMapping("/updateCharacter")
+    public String updateCharacter(@ModelAttribute("characterForm") CharacterForm characterForm) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8081/personnage/{id}";
+
+        Character character = new Character(characterForm.getName(), characterForm.getType(), characterForm.getLifePoint());
+        HttpEntity<Character> request = new HttpEntity<>(character, headers);
+
+        restTemplate.put(url, request, character.getId());
+
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/detailedCharacter/{id}", method = RequestMethod.GET)
     public String showDetailledPersonPage(@PathVariable("id") int id, Model model) {
 

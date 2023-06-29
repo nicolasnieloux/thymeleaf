@@ -11,9 +11,7 @@
 
 <form th:action="@{/addCharacter}"
       th:object="${characterForm}" method="POST">
-    ID
-    <input type="number" th:field="*{id}"/>
-    <br/>
+
     Name:
     <input type="text" th:field="*{name}"/>
     <br/>
@@ -23,9 +21,7 @@
         </option>
     </select>
     <br/>
-    Point de vie
-    <input type="number" th:field="*{lifePoint}" />
-    <br/>
+
     <input type="submit" value="Create"/>
 </form>
 
