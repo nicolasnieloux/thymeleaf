@@ -24,6 +24,9 @@ public class Character {
         this.name = name;
     }
 
+    public Character() {
+    }
+
     public int getId() {
         return id;
     }
