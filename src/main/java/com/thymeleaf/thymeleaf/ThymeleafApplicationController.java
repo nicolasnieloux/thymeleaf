@@ -15,12 +15,17 @@ public class ThymeleafApplicationController {
 
 
     @GetMapping(path = ("/"))
+<<<<<<< HEAD
 
     public  String getCharacter(Model model) {
         RestTemplate restTemplate = new RestTemplate();
         String urlList = "http://localhost:8081/personnage";
         Character[] response = restTemplate.getForObject(urlList, Character[].class);
         model.addAttribute("persons",response );
+=======
+    public String getCharacter(Model model) {
+        model.addAttribute("persons", persons);
+>>>>>>> origin/main
         return "list";
     }
 
@@ -49,11 +54,14 @@ public class ThymeleafApplicationController {
         RestTemplate restTemplate = new RestTemplate();
         String urlList = "http://localhost:8081/personnage";
 
+<<<<<<< HEAD
         Character characterNew = new Character(name,type);
         HttpEntity<Character> request = new HttpEntity<>(characterNew,headers);
 
         restTemplate.postForEntity(urlList, request, Character.class);
 
+=======
+>>>>>>> origin/main
         return "redirect:/";
     }
 
@@ -92,7 +100,13 @@ public String showUpdateCharacterPage(@PathVariable("id") int id, Model model) {
     RestTemplate restTemplate = new RestTemplate();
     String url = "http://localhost:8081/personnage/" +id;
 
+<<<<<<< HEAD
     Character character = restTemplate.getForObject(url, Character.class, id);
+=======
+        if (characterToUpdate == null) {
+            return "redirect:/";
+        }
+>>>>>>> origin/main
 
     if (character != null) {
         CharacterForm characterForm = new CharacterForm();
@@ -126,29 +140,45 @@ public String showUpdateCharacterPage(@PathVariable("id") int id, Model model) {
         CharacterForm character = new CharacterForm(characterForm.getName(), characterForm.getType(), characterForm.getLifePoint());
         HttpEntity<CharacterForm> request = new HttpEntity<>(character, headers);
 
+<<<<<<< HEAD
         restTemplate.put(url, request);
 
+=======
+>>>>>>> origin/main
         return "redirect:/";
     }
 
     @RequestMapping(value = "/detailedCharacter/{id}", method = RequestMethod.GET)
     public String showDetailledPersonPage(@PathVariable("id") int id, Model model) {
 
+<<<<<<< HEAD
         RestTemplate restTemplate = new RestTemplate();
         String urlList = "http://localhost:8081/personnage/"+id;
         Character response = restTemplate.getForObject(urlList, Character.class);
          model.addAttribute("characterDetailed", response);
 
+=======
+        if (characterDetailed == null) {
+            return "redirect:/";
+        }
+>>>>>>> origin/main
         return "detailedCharacter";
     }
 
     @RequestMapping(value = "/removeCharacter/{id}", method = RequestMethod.GET)
     public String deletePersonPage(@PathVariable("id") int id) {
 
+<<<<<<< HEAD
         RestTemplate restTemplate = new RestTemplate();
         String urlList = "http://localhost:8081/personnage/"+id;
         restTemplate.delete(urlList);
 
+=======
+        Character characterToRemove = persons.stream()
+                .filter(character -> character.getId() == id)
+                .findFirst().get();
+        persons.remove(characterToRemove);
+>>>>>>> origin/main
         return "redirect:/";
     }
 
