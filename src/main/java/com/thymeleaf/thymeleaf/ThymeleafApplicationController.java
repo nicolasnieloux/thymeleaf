@@ -88,9 +88,9 @@ public class ThymeleafApplicationController {
 //        return "redirect:/list";
 //    }
 @GetMapping("/updateCharacter/{id}")
-public String showUpdateCharacterPage(@PathVariable("id") Long id, Model model) {
+public String showUpdateCharacterPage(@PathVariable("id") int id, Model model) {
     RestTemplate restTemplate = new RestTemplate();
-    String url = "http://localhost:8081/personnage/{id}";
+    String url = "http://localhost:8081/personnage/" +id;
 
     Character character = restTemplate.getForObject(url, Character.class, id);
 
@@ -101,8 +101,10 @@ public String showUpdateCharacterPage(@PathVariable("id") Long id, Model model) 
         characterForm.setName(character.getName());
         characterForm.setType(character.getType());
         characterForm.setLifePoint(character.getLifePoint());
+        characterForm.setId(character.getId());
 
         model.addAttribute("characterForm", characterForm);
+        model.addAttribute("character", character);
         model.addAttribute("type", type);
 
         return "updateCharacter";
@@ -112,18 +114,19 @@ public String showUpdateCharacterPage(@PathVariable("id") Long id, Model model) 
     }
 }
 
-    @PostMapping("/updateCharacter")
-    public String updateCharacter(@ModelAttribute("characterForm") CharacterForm characterForm) {
+    @PutMapping("/updateCharacter/{id}")
+    public String updateCharacter(@PathVariable ("id") int id,
+                                     @ModelAttribute("characterForm") CharacterForm characterForm) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8081/personnage/{id}";
+        String url = "http://localhost:8081/personnage/"+id;
 
-        Character character = new Character(characterForm.getName(), characterForm.getType(), characterForm.getLifePoint());
-        HttpEntity<Character> request = new HttpEntity<>(character, headers);
+        CharacterForm character = new CharacterForm(characterForm.getName(), characterForm.getType(), characterForm.getLifePoint());
+        HttpEntity<CharacterForm> request = new HttpEntity<>(character, headers);
 
-        restTemplate.put(url, request, character.getId());
+        restTemplate.put(url, request);
 
         return "redirect:/";
     }

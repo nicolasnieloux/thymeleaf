@@ -6,9 +6,10 @@
 </head>
 <body>
 <h1>Mise à jour d'un personnage</h1>
-<a th:href="@{/list}">Retour à la liste</a>
+<a th:href="@{/}">Retour à la liste</a>
 
-<form th:action="@{/updateCharacter}" th:object="${characterForm}" method="POST">
+
+<form th:action="@{/updateCharacter/{id}(id=${character.id})}" th:object="${characterForm}" th:method="put">
 
     Name: <input type="text" th:field="*{name}"/>
     <br/>
@@ -19,8 +20,8 @@
     <br/>
     Point de vie: <input type="number" th:field="*{lifePoint}"/>
     <br/>
-    <input type="submit" value="Update"/>
-    <input type="hidden" name="id" th:value="*{id}">
+    <input type="submit" value="Valider"/>
+
 </form>
 </body>
 </html>

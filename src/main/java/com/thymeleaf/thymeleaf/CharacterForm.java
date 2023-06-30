@@ -7,6 +7,15 @@ public class CharacterForm {
 
     private int lifePoint;
 
+    public CharacterForm() {
+    }
+
+    public CharacterForm(String name, Type type, int lifePoint) {
+        this.name = name;
+        this.type = type;
+        this.lifePoint = lifePoint;
+    }
+
     public int getId() {
         return id;
     }
